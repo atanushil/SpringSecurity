@@ -1,4 +1,4 @@
-package com.atanu.SecurityProject;
+package com.atanu.SecurityProject.Controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,6 +8,6 @@ public class HelloController {
 
     @GetMapping("/")
     public String greet(HttpServletRequest req){
-        return "Welcome to my application" +req.getSession().getId();
+        return "Welcome to my application " +req.getSession().getId();
     }
 }

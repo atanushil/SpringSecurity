@@ -1,4 +1,4 @@
-package com.atanu.SecurityProject;
+package com.atanu.SecurityProject.Model;
 
 public class Student {
 

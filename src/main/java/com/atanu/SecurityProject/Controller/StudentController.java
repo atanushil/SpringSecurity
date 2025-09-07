@@ -1,5 +1,6 @@
-package com.atanu.SecurityProject;
+package com.atanu.SecurityProject.Controller;
 
+import com.atanu.SecurityProject.Model.Student;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.csrf.CsrfToken;
