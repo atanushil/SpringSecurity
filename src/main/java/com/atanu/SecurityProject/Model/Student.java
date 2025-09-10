@@ -1,11 +1,22 @@
 package com.atanu.SecurityProject.Model;
 
+import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Autowired;
+
+@Entity
+@Table(name="student_details")
 public class Student {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
     private  int age;
 
+
+    public  Student(){
+
+    }
     public Student(int id, String name, int age) {
         this.id = id;
         this.name = name;
