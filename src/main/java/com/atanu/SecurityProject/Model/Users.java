@@ -11,15 +11,21 @@ public class Users {
     private Long id;
     private String username;
     private String password;
-
-    @Version
-    private Long version;
+    private int version;
 
     public Users() {
     }
 
-    public Users(Long id, String username, String password,Long version) {
-        this.id = id;
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    public Users(int id, String username, String password,int version) {
+        this.id = (long) id;
         this.username = username;
         this.password = password;
         this.version=version;
@@ -51,13 +57,7 @@ public class Users {
         this.password = password;
     }
 
-    public Long getVersion() {
-        return version;
-    }
 
-    public void setVersion(Long version) {
-        this.version = version;
-    }
 
     @Override
     public String toString() {
@@ -65,7 +65,6 @@ public class Users {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", version=" + version +
                 '}';
     }
 

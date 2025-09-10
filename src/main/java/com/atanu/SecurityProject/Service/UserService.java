@@ -34,8 +34,9 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         // Save the user
-        Users savedUser = userRepo.save(user);
+        Users saved=userRepo.save(user);
+//        Users savedUser = userRepo.save(user);
 
-        return ResponseEntity.status(201).body("User registered with ID: " + savedUser.getId());
+        return ResponseEntity.status(201).body("User registered with ID: " + saved.getId());
     }
 }
