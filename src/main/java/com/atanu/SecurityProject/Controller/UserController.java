@@ -19,4 +19,10 @@ public class UserController {
     public ResponseEntity<?> register(@RequestBody UserRequestDto user){
         return userService.registerUser(user);
     }
+    @PostMapping("/login")
+    public String login(@RequestBody UserRequestDto user){
+        System.out.println(user.toString());
+
+        return userService.verify(user);
+    }
 }

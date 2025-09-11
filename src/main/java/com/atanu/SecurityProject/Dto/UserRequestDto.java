@@ -37,7 +37,19 @@ public class UserRequestDto  {
         this.version = version;
     }
 
+    public UserRequestDto(String password,String username){
+        this.password=password;
+        this.username=username;
+    }
     public UserRequestDto(){
 
+    }
+
+    @Override
+    public String toString() {
+        return "User credential : {" +
+                "password='" + password + '\'' +
+                ", username='" + username + '\'' +
+                '}';
     }
 }
