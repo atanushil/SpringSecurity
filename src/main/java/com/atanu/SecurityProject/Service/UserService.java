@@ -1,9 +1,11 @@
 package com.atanu.SecurityProject.Service;
 
+import com.atanu.SecurityProject.Dto.UserRequestDto;
 import com.atanu.SecurityProject.Model.Users;
 import com.atanu.SecurityProject.Repo.userRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,25 +20,21 @@ public class UserService {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Transactional
-    public ResponseEntity<?> registerUser(Users user) {
-        // Check required fields
-        if (user.getUsername() == null || user.getUsername().isBlank() ||
-                user.getPassword() == null || user.getPassword().isBlank()) {
+    public ResponseEntity<?> registerUser(UserRequestDto userDto) {
+        if (userDto.getUsername() == null || userDto.getUsername().isBlank() ||
+                userDto.getPassword() == null || userDto.getPassword().isBlank()) {
             return ResponseEntity.badRequest().body("Please fill all fields");
         }
 
-        // Check if username already exists
-        if (userRepo.findById(user.getId()).isPresent()) {
+        if (userRepo.findByUsername(userDto.getUsername())!=null) {
             return ResponseEntity.status(409).body("Username already exists");
         }
+        Users newUser=new Users();
+        newUser.setUsername(userDto.getUsername());
+        newUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        newUser.setVersion(userDto.getVersion());
+        Users savedUser=userRepo.save(newUser);
 
-        // Hash the password before saving
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-        // Save the user
-        Users saved=userRepo.save(user);
-//        Users savedUser = userRepo.save(user);
-
-        return ResponseEntity.status(201).body("User registered with ID: " + saved.getId());
+        return ResponseEntity.status(201).body("User registered with ID: " + savedUser.getId());
     }
 }

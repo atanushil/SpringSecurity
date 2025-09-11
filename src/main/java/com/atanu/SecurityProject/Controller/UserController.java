@@ -1,5 +1,6 @@
 package com.atanu.SecurityProject.Controller;
 
+import com.atanu.SecurityProject.Dto.UserRequestDto;
 import com.atanu.SecurityProject.Model.Users;
 import com.atanu.SecurityProject.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody Users user){
+    public ResponseEntity<?> register(@RequestBody UserRequestDto user){
         return userService.registerUser(user);
     }
 }
