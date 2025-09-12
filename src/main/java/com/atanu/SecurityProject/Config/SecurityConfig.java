@@ -1,6 +1,7 @@
 package com.atanu.SecurityProject.Config;
 
 import com.atanu.SecurityProject.Service.MyUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,13 +16,16 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-//    @Autowired
     private final MyUserDetailsService userDetailsService;
+
+    @Autowired
+    private JwtFilter jwtFilter;
 
     public SecurityConfig(MyUserDetailsService service) {
         this.userDetailsService = service;
@@ -41,7 +45,9 @@ public class SecurityConfig {
                 .logout(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                );
+                )
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+        ;
 
         return http.build();
     }
