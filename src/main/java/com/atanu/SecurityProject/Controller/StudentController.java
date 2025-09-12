@@ -1,5 +1,6 @@
 package com.atanu.SecurityProject.Controller;
 
+import com.atanu.SecurityProject.Dto.StudentRequestDto;
 import com.atanu.SecurityProject.Model.Student;
 import com.atanu.SecurityProject.Repo.StudentRepo;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 public class StudentController {
@@ -30,12 +32,15 @@ public class StudentController {
     }
 
     @PostMapping("/students")
-    public ResponseEntity<?> addStudent(@RequestBody Student student) {
+    public ResponseEntity<?> addStudent(@RequestBody StudentRequestDto student) {
         for(Student st:students.findAll()){
-            if(st.getId()==student.getId())
+            if(Objects.equals(st.getName(), student.getName()))
                 return ResponseEntity.status(400).body("Student already exist");
         }
-//        students.save(student);
+        Student newStudent=new Student();
+        newStudent.setName(student.getName());
+        newStudent.setAge(student.getAge());
+        students.save(newStudent);
         return ResponseEntity.status(201).body(student);
     }
 
